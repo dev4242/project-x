@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+maxSleepTime="${MAX_SLEEP:-30}"
+
+sleepTime=$((RANDOM % maxSleepTime))
+
+echo "# Doing complicated arithmetic (aka sleeping) for ${sleepTime} seconds ..."
+sleep ${sleepTime}
+echo "# Done!"
