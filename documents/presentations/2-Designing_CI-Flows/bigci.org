@@ -161,12 +161,13 @@
 
 * CI from the CI Flow Plumber's point of view
   - Modularization \pause
-  - Logging \pause
+  - Logging \pause \bigskip
 
 
   - \myalert{3}{Non-exhaustive list!} \pause
     - Speed
     - Stability
+    - Scalability
     - Reproducibility
     - ...
 
@@ -243,12 +244,12 @@
   \pause
   - \myalert{2}{One developer/app should not stop flow for all} \pause
     - Bad quality \rightarrow You dont get to play \pause
-    - \myalert{4}{Revert/recover first, fix later} \pause
+    - \myalert{4}{Revert/recover first, fix later} \pause \bigskip
 
 
   - Needed: \pause
     - Clean interfaces \pause
-    - Requirements \pause
+    - Requirements \pause \bigskip
 
 
   - (Enabler of Agile!) \pause
@@ -260,7 +261,7 @@
     - Harder to cooperate \pause
     - Multiple solutions to same problem (alignment) \pause
   - Permissions \pause
-    - "/Why should you have access to my code?/" \pause
+    - "/Why should you have access to my code?/" \pause \bigskip
 
 
   - "Box thinking" \pause
@@ -276,11 +277,11 @@
   \end{figure}
 
 * Test failure
-  - Test case fail \rightarrow *What do you do?*
+  - Test case fail \pause \rightarrow \myalert{2}{What do you do?}
 
 * Logging
   - Remember Big CI Problems: \pause
-    - Many tests+developers+apps/Tracking/Intermittency... \pause
+    - Many tests+developers+apps/Tracking/Intermittency... \pause \bigskip
 
 
   - Test failed in App Integration \rightarrow \pause
@@ -291,11 +292,20 @@
       - More intermittent today than last week?
 
 * Logging cont
-  - Without data, we are blind to degradations \pause
+  - Without data, we are blind to degradations \pause \bigskip
 
 
   - \myalert{2}{Solution: automatic result tracking!} \pause
-    - Test failure messages, configurations, target log analysis
+    - Test failure messages, configurations, target log analysis \pause
+  - /I.e. store test results and test meta data/
+
+* Tracking of faults
+
+* Break
+
+* Scalability
+
+* Reproducibility
 
 * Questions?
   \centering
