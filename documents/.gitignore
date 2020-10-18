@@ -1,3 +1,5 @@
 *.tex
 *.bbl
 *.pdf
+_minted*
+*.pyg

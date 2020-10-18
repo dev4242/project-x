@@ -7,4 +7,5 @@ bigci.pdf: bigci.org *.png
 part2.pdf:
 
 clean:
-	rm -f *.bbl *.pdf *.tex
+	rm -f *.bbl *.pdf *.tex *.pyg
+	rm -rf _minted*

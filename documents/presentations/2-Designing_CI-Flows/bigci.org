@@ -2,7 +2,7 @@
 #+LATEX_HEADER: \newcommand{\mytitle}{Designing CI-Flows Part 1}
 #+TITLE: \mytitle\normalsize\newline\emph{CI for thousands of developer}
 #+AUTHOR:
-#+LATEX_HEADER: \usepackage{xcolor, listings, stmaryrd, alltt, tikz, setspace, xspace, hyperref}
+#+LATEX_HEADER: \usepackage{xcolor, listings, stmaryrd, alltt, tikz, setspace, xspace, hyperref, minted}
 #+LATEX_HEADER: \usetikzlibrary{quotes,arrows,arrows.meta,shapes,calc,positioning,spy,decorations.pathmorphing,fit}
 #+LATEX_HEADER: \definecolor{myblue}{HTML}{05ADF3}
 #+LATEX_HEADER: \hypersetup{colorlinks, urlcolor=myblue, linkcolor=myblue}
@@ -15,6 +15,8 @@
 \pdfinfo{
 /Title (\mytitle)
 }
+
+\newminted{bash}{fontsize=\scriptsize,highlightcolor=cyan}
 
 \definecolor{mygray}{rgb}{0.9,0.9,1}
 \definecolor{mygreen}{rgb}{0.1,0.85,0.1}
@@ -172,6 +174,13 @@
     - ...
 
 * Modularization
+  :PROPERTIES:
+  :BEAMER_opt: label=modularization
+  :BEAMER_act: 1-9
+  :END:
+
+
+  #+BEGIN_EXPORT latex
   \tikzstyle{mytext} = [fill=yellow!10, draw=blue, thick, inner sep=5, align=center]
   \tikzstyle{mytext2} = [scale=0.77, fill=yellow!10, draw=black, thick, inner sep=5, align=center,font=\bf]
   \tikzstyle{mytext3} = [fill=red!10, draw=blue, thick, inner sep=5, align=center, scale=2, ellipse]
@@ -182,11 +191,11 @@
   \centering
   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
   \node[box] (1) at (-7.2,0) {Commit};
-  \node[box, right=of 1] (2) {Host\\test};
+  \node[box, right=of 1, onslide={<10>{draw=red}}] (2) {Host\\test};
   \draw[myarrow] (1) -- (2);
   \node[box, right=of 2] (3) {Merge};
   \draw[myarrow] (2) -- (3);
-  \node[box, right=of 3] (4) {Build};
+  \node[box, right=of 3, onslide={<10>{draw=red}}] (4) {Build};
   \draw[myarrow] (3) -- (4);
   \node[box, right=of 4] (5) {App\\Integration\\on LSV};
   \draw[myarrow] (4) -- (5);
@@ -207,9 +216,9 @@
   \draw<3>[myarrow2] (b) -- (7);
 
   \node<4->[box, below=of 1, yshift=-0.6cm, onslide={<4>{draw=red}}] (c2) {Commit};
-  \node<4->[box, right=of c2, onslide={<4>{draw=red}}] (h2) {Host\\test};
+  \node<4->[box, right=of c2, onslide={<4,10>{draw=red}}] (h2) {Host\\test};
   \node<4->[box, below=of c2, yshift=-0.6cm, onslide={<4>{draw=red}}] (c3) {Commit};
-  \node<4->[box, right=of c3, onslide={<4>{draw=red}}] (h3) {Host\\test};
+  \node<4->[box, right=of c3, onslide={<4,10>{draw=red}}] (h3) {Host\\test};
   \node<4->[below=of c3, yshift=-0.6cm] {\bf\Huge{}\alert<4>{...}};
   \draw<4->[myarrow] (c2) -- (h2);
   \draw<4->[myarrow] (h2) -- (3);
@@ -231,14 +240,18 @@
 
   \path<7-> (5) edge[<->, thick, dashed, "{\bf\alert<7>{Interface}}"] (m2);
 
-  \node<8->[mytext3, below=of 5, yshift=-0.7cm] (b2) {Bottleneck};
-  \draw<8->[myarrow2] (b2) -- (6);
+  \node<8,9>[mytext3, below=of 5, yshift=-0.7cm] (b2) {Bottleneck};
+  \draw<8,9>[myarrow2] (b2) -- (6);
 
   \node<9>[mytext4, above=of 6, yshift=0.7cm, xshift=0.5cm] (b3) {Dont allow\\degradation\\Backout fast};
   \draw<9>[myarrow2] (b3) -- (6);
 
+  \frametitle<10>{Scalability, a practical example}
+
+
   \end{tikzpicture}
   \end{figure}
+  #+END_EXPORT
 
 * Modularization cont
   \pause
@@ -254,7 +267,11 @@
 
   - (Enabler of Agile!) \pause
     - More defined "sub" responsibilites, better backlogs \pause
-    - Sub-orgs solve similar problems \rightarrow best solution wins!
+    - Sub-orgs solve similar problems \rightarrow best solution wins! \pause
+  - Shift-left principle \pause
+    - Tests involving only one application tested in app integration
+    - Move tests that often fail earlier in the loop \pause
+      loops (or before)
 
 * Modularization bad things
   - More spread out \pause
@@ -301,11 +318,74 @@
 
 * Tracking of faults
 
-* Break
+* Scalability and feedback
+  - Many developers, many repositories, many tests \pause
+    - If a upload a change, what to test? \pause
+  - \myalert{3}{Running everything all the time will cripple your CI} \pause
+  - \myalert{4}{Running important tests to late will cripple feedback and slow down development!}
 
-* Scalability
+* Running all tests
+  :PROPERTIES:
+  :BEAMER_opt: fragile
+  :END:
 
-* Reproducibility
+  \begin{bashcode*}{highlightlines=7}
+  $ cd project-x
+  $ . ci/setup.sh
+  $ time apps/app00/test/test.sh
+  ## Running tests for /home/solarus/projects/project-x/apps/app00
+  # Doing complicated arithmetic (aka sleeping) for 8 seconds ...
+  # Done!
+  real  0m8.014s
+  \end{bashcode*}
+  \hspace{1cm}
+  \onslide<2>
+  \begin{bashcode*}{highlightlines=9}
+  $ time find -name test.sh -exec {} \;
+  ## Running tests for /home/solarus/projects/project-x/apps/app04
+  # Doing complicated arithmetic (aka sleeping) for 0 seconds ...
+  # Done!
+  ...
+  ## Running tests for /home/solarus/projects/project-x/apps/app03
+  # Doing complicated arithmetic (aka sleeping) for 28 seconds ...
+  # Done!
+  real  11m13.586s
+  \end{bashcode*}
+
+#+BEGIN_EXPORT latex
+\end{frame}
+\againframe<10>{modularization}
+#+END_EXPORT
+
+* Scalability, a practical example
+  - Parallelism \pause
+    - Run as many test as possible at the same time \pause
+  - Smart testing \pause
+    - Run only tests related to the application/change \pause
+  - Dynamic, developer driven, test scope \pause
+    - Everyone should be able to add/remove test cases from gating
+      guard \pause
+    - Demystifies CI, less scary \pause
+    - Developers are not relying on CI teams for guard update \pause
+  - (Build avoidance) \pause
+    - Cache build artifacts that has not changed \pause
+    - =ccache=
+
+* Scalability, summary
+  - Run tests as early as possible \pause
+    - Host test > target test \pause
+  - Run tests only related to current change \pause
+    - /Smart test scope/ \pause
+    - Impossible without clean interfaces / separation of concerns \pause
+  - Dynamic, developer driven, test scope \pause
+    - Everyone should be able to add/remove test cases from gating
+      guard \pause
+    - Demystifies CI, less scary \pause
+    - Developers are not relying on CI teams for guard update \pause
+  - Parallelism and caching (build avoidance) is your friend \pause
+  - \myalert{11}{Invest in architecture of application and CI together!}
+
+* Reproducibility, a practical example
 
 * Questions?
   \centering
