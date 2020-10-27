@@ -66,6 +66,31 @@ println("APA")
 // Get environment variables. All parameters are inserted as environment variable
 env.VARIABLE
 
+// Run code in parallel in scripted pipeline 
+// Documentation for declarative syntax: https://www.jenkins.io/doc/book/pipeline/syntax/#parallel
+def toBeRunParallel(id){
+     return {
+        node{
+            ws("/var/jenkins/workspace_${env.EXECUTOR_NUMBER}"){
+                println("apan sover")
+            }
+            
+        }
+    }
+}
+node{
+    stage("build"){
+        def test1 = toBeRunParallel("1")
+        def test2 =  toBeRunParallel("2")
+        def tests = [:]
+        tests["test1"] = test1
+        tests["test2"] = test2
+        parallel tests
+    }
+}
+
+
+
 // Create variable of any type, "def" is a generic type, you can see it as "var" in javascript
 def variable
 
@@ -77,10 +102,8 @@ def m = [:]
 
 m["apa"] = "sover"
 
-
 // Create a String array
 String[] sa = ["string"]
-
 
 // loop through a string array
 String[] sa = ["string"]
