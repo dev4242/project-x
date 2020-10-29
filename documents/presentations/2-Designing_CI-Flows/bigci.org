@@ -146,7 +146,11 @@
   \end{figure}
 
 * Big CI Problems
-  - Test scope \pause
+  :PROPERTIES:
+  :BEAMER_opt: label=problems
+  :END:
+
+  - Test scope size \pause
     - Can we run all tests? \pause
     - Where should tests run? \pause
     - \myalert{8}{Are all tests passing?} \pause
@@ -292,107 +296,33 @@
   \end{tikzpicture}
   \end{figure}
 
+#+BEGIN_EXPORT latex
+\end{frame}
+\againframe<15>{problems}
+#+END_EXPORT
+
 * Way towards Big CI, early actions
   :PROPERTIES:
   :BEAMER_opt: label=way
   :BEAMER_act: 1-
   :END:
 
-  1. Parellelism \pause
+  1. \myalert{15}{Parellelism} \pause
      - Enables running many tests \pause
   2. Build avoidance / caching \pause
      - Don't rebuild source/objects that has not changed \pause
      - Cache objects/build dependencies between consecutive runs \pause
-  3. Smart testing \pause
+  3. \myalert{15}{Smart testing} \pause
      - Many tests \(\longrightarrow\) running all cripples CI \pause
      - Only run tests that are related to change \pause
-  4. Invest in CI \myalert{+}{and Application} architecture \pause[\thebeamerpauses]
+  4. Invest in Application \myalert{+}{and CI} architecture \pause[\thebeamerpauses]
      - \myalert{+}{Design for testability} \pause[\thebeamerpauses]
        - Divide application into sub responsibilities (modularization) \pause
        - Communicate with backwards compatible interfaces \pause
        - Separation of concerns! \pause
      - Mocking!
 
-* Way towards BIG CI, later actions
-  1. Modularization (architecture) \pause
-     - Integration Testing of subset of complete application \pause
-  2. Layered testing \pause
-     - E.g. run long running system testing later \pause \pause
-  3. CI for CI \pause
-     - Run CI changes in same delivery/test flow as applications \pause
-  4. Logging \pause
-     - Save test results / data of test case executions! \pause
-     - Impossible for humans to understand complete system \pause
-       - Understanding individual problems is easier \pause
-       - \myalert{+}{Track where each specific problem occurs in complete CI automatically}
-         \pause[\thebeamerpauses]
-  5. Stability and recovery \pause
-     - Not running tests in later loops is expensive! \pause
-       - Long feedback from commit to test execution \pause
-       - If one test fails also following tests \(\longrightarrow\)
-         big gap in testing feedback until problem solved \pause
-     - Automatic recovery if application / tests misbehave
-
-  \begin{figure}
-  \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
-  \centering
-  \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<5> at (0,4.5) {\includegraphics[width=10cm]{./layered_testing}};
-  \end{tikzpicture}
-  \end{figure}
-
-* Stability
-  - Problem: Testing on real hardware \(\longrightarrow\) tests or
-    product faults might break test environment \pause
-  - Hard to guarantee stand alone testing \pause
-  - Solution: Tests try to recover environment to known working
-    configuration before continuing \pause
-    - Never give up! \pause \pause \bigskip
-  - Without recovery, tests after tc failure loose feedback as well \pause
-    - One test failure might lower confidence in big part of system
-      \pause
-    - \(\longrightarrow\) \myalert{+}{Other product issues potentially hidden}
-
-  \begin{figure}
-  \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
-  \centering
-  \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<5> at (2,4.5) {\includegraphics[width=5cm]{./neversurrender}};
-  \end{tikzpicture}
-  \end{figure}
-
-* Stability, cont
-  [[./no_recover.png]]
-
-* Stability recovering
-  [[./recover.png]]
-
-* Test failure
-  - Test case fail \pause \rightarrow \myalert{2}{What do you do?}
-
-* Logging
-  - Remember Big CI Problems: \pause
-    - Many tests+developers+apps/Tracking/Intermittency... \pause \bigskip
-
-
-  - Test failed in App Integration \rightarrow \pause
-    - Test failed before? (same way!) \pause
-      - In same App/other apps? \pause
-      - On certain configurations? \pause
-    - Intermittent? \pause
-      - More intermittent today than last week?
-
-* Logging cont
-  - Without data, we are blind to degradations \pause \bigskip
-
-
-  - \myalert{2}{Solution: automatic result tracking!} \pause
-    - Test failure messages, configurations, target log analysis \pause
-  - /I.e. store test results and test meta data/
-
-* Tracking of faults
-
-* Scalability and feedback
+* Scalability and feedback                                         :noexport:
   - Many developers, many repositories, many tests \pause
     - If I upload a change, what to test? \pause
   - \myalert{3}{Running everything all the time will cripple your CI} \pause
@@ -426,12 +356,26 @@
   real  11m13.586s
   \end{bashcode*}
 
+* Running all tests
+  - In this case 50 suites \pause
+    - Around 15 seconds to finish \(\longrightarrow\) on average 12.5
+      minutes running sequentially \pause \bigskip
+
+  - Example from \myalert{5}{one} repository: \pause
+    - 1 929 test suites
+    - (1 035 437 lines of \myalert{4-}{test} code) \pause \pause \bigskip
+
+  - Around 15 seconds to finish \(\longrightarrow\) about 482 minutes
+    of sequential run time \pause
+    - I.e. a work day...
+
+
 #+BEGIN_EXPORT latex
 \end{frame}
 \againframe<10>{modularization}
 #+END_EXPORT
 
-* Scalability, a practical example
+* Big CI, a practical example
   - Parallelism \pause
     - Run as many test as possible at the same time \pause
   - Smart testing \pause
@@ -441,25 +385,101 @@
       guard \pause
     - Demystifies CI, less scary \pause
     - Developers are not relying on CI teams for guard update \pause
-  - (Build avoidance) \pause
+  - Build avoidance \pause
     - Cache build artifacts that has not changed \pause
-    - =ccache=
+    - =ccache= \pause
+  - \myalert{+}{Developer feedback} \pause[\thebeamerpauses]
+    - \myalert{+}{What has gone wrong} \pause[\thebeamerpauses]
+    - \myalert{+}{How can I reproduce it?!}
 
-* Scalability, summary
-  - Run tests as early as possible \pause
-    - Host test > target test \pause
-  - Run tests only related to current change \pause
-    - /Smart test scope/ \pause
-    - Impossible without clean interfaces / separation of concerns \pause
-  - Dynamic, developer driven, test scope \pause
-    - Everyone should be able to add/remove test cases from gating
-      guard \pause
-    - Demystifies CI, less scary \pause
-    - Developers are not relying on CI teams for guard update \pause
-  - Parallelism and caching (build avoidance) is your friend \pause
-  - \myalert{11}{Invest in architecture of application and CI together!}
+* Example of Big CI feedback
+  \vspace{-1cm}
 
-* Reproducibility, a practical example
+  #+ATTR_LATEX: :width 11cm
+  [[./tests.png]]
+
+* Way towards BIG CI, later actions
+  1. \myalert{18}{Modularization} (architecture) \pause
+     - Integration Testing of subset of complete application \pause
+  2. Layered testing \pause
+     - E.g. run long running system testing later \pause \pause
+  3. CI for CI \pause
+     - Run CI changes in same delivery/test flow as applications \pause
+  4. Logging \pause
+     - Save test results / data of test case executions! \pause
+     - \myalert{+}{Impossible for humans to understand complete system} \pause[\thebeamerpauses]
+       - Understanding individual problems is easier \pause
+       - \myalert{+}{Track where each specific problem occurs in complete CI automatically}
+         \pause[\thebeamerpauses]
+  5. \myalert{19}{Stability and Recovery} \pause
+     - Not running tests in later loops is expensive! \pause
+       - Long feedback from commit to test execution \pause
+       - If one test fails also following tests \(\longrightarrow\)
+         big gap in testing feedback until problem solved \pause
+     - Automatic recovery if application / tests misbehave
+
+  \begin{figure}
+  \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
+  \centering
+  \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
+  \node<5> at (0,4.5) {\includegraphics[width=10cm]{./layered_testing}};
+  \end{tikzpicture}
+  \end{figure}
+
+* Stability and Recovery
+  - Problem: Testing on real hardware \(\longrightarrow\) tests or
+    product faults might break test environment \pause
+  - Hard to guarantee stand alone testing \pause \bigskip
+
+
+  - Solution: Tests try to recover environment to known working
+    configuration before continuing \pause
+    - Never give up! \pause \pause
+  - Without recovery, tests after tc failure loose feedback as well \pause
+    - One test failure might lower confidence in big part of system
+      \pause
+    - \(\longrightarrow\) \myalert{+}{Other product/test issues potentially hidden}
+
+  \begin{figure}
+  \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
+  \centering
+  \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
+  \node<5> at (2,4.5) {\includegraphics[width=5cm]{./neversurrender}};
+  \end{tikzpicture}
+  \end{figure}
+
+* Stability: No recovery
+  [[./no_recover.png]]
+
+* Stability: With recovery
+  [[./recover.png]]
+
+* Test failure
+  - Test case fail \pause \rightarrow \myalert{2}{What do you do?}
+
+* Logging
+  - Remember Big CI Problems: \pause
+    - Many tests+developers+apps/Tracking/Intermittency... \pause \bigskip
+
+
+  - Test failed in App Integration \rightarrow \pause
+    - Test failed before? (same way!) \pause
+      - In same App/other apps? \pause
+      - On certain configurations? \pause
+    - Intermittent? \pause
+      - More intermittent today than last week?
+
+* Logging cont
+  - Without data, we are blind to degradations \pause \bigskip
+
+
+  - \myalert{2}{Solution: automatic result tracking!} \pause
+    - Test failure messages, configurations, target log analysis \pause
+    - /I.e. store test results and test meta data/ \pause
+  - Tool to automatically tag knows faults in stored results \pause
+    - Tagged faults can be visualized separately (ticket) \pause
+    - \(\longrightarrow\) easier to understand \pause
+    - Know if fix helped without reading single log!
 
 * Questions?
   \centering
