@@ -226,7 +226,7 @@
   \draw<4->[myarrow] (c2) -- (h2);
   \draw<4->[myarrow] (h2) -- (3);
   \draw<4->[myarrow] (c3) -- (h3);
-  \draw<4->[myarrow] (h3) -- (3);
+  \draw<4->[myarrow] (h3.north east) -- (3);
 
   \node<5->[box, above=of 5, yshift=1cm, onslide={<5>{draw=red}}] (m2) {App\\Integration\\on LSV};
   \node<5->[box, left=of m2, onslide={<5>{draw=red}}] (r2) {Build};
@@ -266,11 +266,9 @@
   - Needed: \pause
     - Clean interfaces \pause
     - Requirements \pause
-    - I.e. \myalert{8}{good architecture!} \pause \bigskip
-
-
+    - I.e. \myalert{8}{good architecture!} \pause
   - (Enabler of Agile!) \pause
-    - More defined "sub" responsibilites, better backlogs \pause
+    - More defined "sub" responsibilities, better backlogs \pause
     - Sub-orgs solve similar problems \rightarrow best solution wins! \pause
   - Shift-left principle \pause
     - Tests involving only one application tested in app integration \pause
@@ -310,7 +308,7 @@
   1. \myalert{15}{Parellelism} \pause
      - Enables running many tests \pause
   2. Build avoidance / caching \pause
-     - Don't rebuild source/objects that has not changed \pause
+     - Don't rebuild source/objects that have not changed \pause
      - Cache objects/build dependencies between consecutive runs \pause
   3. \myalert{15}{Smart testing} \pause
      - Many tests \(\longrightarrow\) running all cripples CI \pause
@@ -376,18 +374,18 @@
 #+END_EXPORT
 
 * Big CI, a practical example
-  - Parallelism \pause
+  - Parallelism
     - Run as many test as possible at the same time \pause
-  - Smart testing \pause
+  - Smart testing
     - Run only tests related to the application/change \pause
+  - Build avoidance
+    - Cache build artifacts that has not changed
+    - =ccache= \pause
   - Dynamic, developer driven, test scope \pause
     - Everyone should be able to add/remove test cases from gating
       guard \pause
     - Demystifies CI, less scary \pause
     - Developers are not relying on CI teams for guard update \pause
-  - Build avoidance \pause
-    - Cache build artifacts that has not changed \pause
-    - =ccache= \pause
   - \myalert{+}{Developer feedback} \pause[\thebeamerpauses]
     - \myalert{+}{What has gone wrong} \pause[\thebeamerpauses]
     - \myalert{+}{How can I reproduce it?!}
@@ -405,7 +403,7 @@
      - E.g. run long running system testing later \pause \pause
   3. CI for CI \pause
      - Run CI changes in same delivery/test flow as applications \pause
-  4. Logging \pause
+  4. Logging (big data) \pause
      - Save test results / data of test case executions! \pause
      - \myalert{+}{Impossible for humans to understand complete system} \pause[\thebeamerpauses]
        - Understanding individual problems is easier \pause
@@ -479,7 +477,24 @@
   - Tool to automatically tag knows faults in stored results \pause
     - Tagged faults can be visualized separately (ticket) \pause
     - \(\longrightarrow\) easier to understand \pause
-    - Know if fix helped without reading single log!
+    - Know if fix helped without reading single test log!
+
+* Summary
+  - Parallelism, smart testing, caching crucial \pause
+  - Developer driven test scope (dynamic scope), reproducibility \pause
+  - Modularization \pause
+    - Test scope per sub-application \pause
+    - Avoids bottlenecks \pause
+    - Good architecture (CI + application) \pause
+  - Logging (big data) \pause
+    - Save results for: \pause
+      - Fault tracking
+      - Long term performance tracking
+      - Troubleshooting
+
+* Labs
+  - Parallelism
+  - Smart testing
 
 * Questions?
   \centering
