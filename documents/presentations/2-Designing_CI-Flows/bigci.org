@@ -1,5 +1,5 @@
 # ## This title will be seen in the pdf properties/meta data
-#+LATEX_HEADER: \newcommand{\mytitle}{Designing CI-Flows Part 1}
+#+LATEX_HEADER: \newcommand{\mytitle}{Designing CI-Flows}
 #+TITLE: \mytitle\normalsize\newline\emph{CI for thousands of developer}
 #+AUTHOR:
 #+LATEX_HEADER: \usepackage{xcolor, listings, stmaryrd, alltt, tikz, setspace, xspace, hyperref, minted}
@@ -208,15 +208,15 @@
   \draw[myarrow] (6) -- (7);
 
   \node<2,3|nohandout>[mytext4, below=of 2, yshift=-0.7cm] (many) {Thousands of\\developers};
-  \draw<2,3>[myarrow2] (many) -- (1);
+  \draw<2,3|nohandout>[myarrow2] (many) -- (1);
 
   \node<3|nohandout>[mytext3, above=of 4, yshift=1.2cm] (b) {Bottleneck};
-  \draw<3>[myarrow2] (b) -- (2);
-  \draw<3>[myarrow2] (b) -- (3);
-  \draw<3>[myarrow2] (b) -- (4);
-  \draw<3>[myarrow2] (b) -- (5);
-  \draw<3>[myarrow2] (b) -- (6);
-  \draw<3>[myarrow2] (b) -- (7);
+  \draw<3|nohandout>[myarrow2] (b) -- (2);
+  \draw<3|nohandout>[myarrow2] (b) -- (3);
+  \draw<3|nohandout>[myarrow2] (b) -- (4);
+  \draw<3|nohandout>[myarrow2] (b) -- (5);
+  \draw<3|nohandout>[myarrow2] (b) -- (6);
+  \draw<3|nohandout>[myarrow2] (b) -- (7);
 
   \node<4->[box, below=of 1, yshift=-0.6cm, onslide={<4>{draw=red}}] (c2) {Commit};
   \node<4->[box, right=of c2, onslide={<4,10>{draw=red}}] (h2) {Host\\test};
@@ -290,7 +290,7 @@
   \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
   \centering
   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<8> at (0,3.5) {\includegraphics[width=14cm]{./engineering-fail}};
+  \node<8|nohandout> at (0,3.5) {\includegraphics[width=14cm]{./engineering-fail}};
   \end{tikzpicture}
   \end{figure}
 
@@ -420,7 +420,7 @@
   \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
   \centering
   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<5> at (0,4.5) {\includegraphics[width=10cm]{./layered_testing}};
+  \node<5|nohandout> at (0,4.5) {\includegraphics[width=10cm]{./layered_testing}};
   \end{tikzpicture}
   \end{figure}
 
@@ -442,7 +442,7 @@
   \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
   \centering
   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<5> at (2,4.5) {\includegraphics[width=5cm]{./neversurrender}};
+  \node<5|nohandout> at (2,4.5) {\includegraphics[width=5cm]{./neversurrender}};
   \end{tikzpicture}
   \end{figure}
 
@@ -493,8 +493,10 @@
       - Troubleshooting
 
 * Labs
-  - Parallelism
-  - Smart testing
+  - Lab 3: Add smart testing and dynamic test scope for Project-X \pause
+  - Lab 4: Set up parellelism for Project-X \pause
+  - https://github.com/dev4242/project-x/tree/main/documents/labs \pause
+    - Labs, cheat sheet!
 
 * Questions?
   \centering
