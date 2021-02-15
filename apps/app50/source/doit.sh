@@ -3,7 +3,3 @@
 set -eu
 
 randomsleep
-
-
-
-
