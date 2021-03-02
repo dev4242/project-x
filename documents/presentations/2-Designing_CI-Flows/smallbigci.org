@@ -1,6 +1,6 @@
 # ## This title will be seen in the pdf properties/meta data
-#+LATEX_HEADER: \newcommand{\mytitle}{Designing CI Flows}
-#+TITLE: \mytitle\newline\normalsize\emph{CI for thousands of developers}
+#+LATEX_HEADER: \newcommand{\mytitle}{CI from scratch}
+#+TITLE: \mytitle\newline\scriptsize{}Big CI: \emph{Or how I stopped worrying and started to trust the automatic test}
 #+AUTHOR:
 #+LATEX_HEADER: \usepackage{xcolor, listings, stmaryrd, alltt, tikz, setspace, xspace, hyperref, minted}
 #+LATEX_HEADER: \usetikzlibrary{quotes,arrows,arrows.meta,shapes,calc,positioning,spy,decorations.pathmorphing,fit}
@@ -12,7 +12,7 @@
 #+LANGUAGE: en
 #+LATEX_HEADER: \setbeamertemplate{background}{\begin{tikzpicture}
 #+LATEX_HEADER:   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-#+LATEX_HEADER:   \node[opacity=3/5] at (-5.15,-4.15) {\includegraphics[width=2.5cm]{sigma_outline_pos}};
+#+LATEX_HEADER:   \node[opacity=3/5] at (-5.1,-4.2) {\includegraphics[width=2.5cm]{Nexer_Logo_Black_RGB}};
 #+LATEX_HEADER: \end{tikzpicture}}
 # ### Hide the presentation controls
 #+LATEX_HEADER: \setbeamertemplate{navigation symbols}{}
@@ -103,7 +103,7 @@
 
 * Who am I
   \setbeamercovered{transparent=0}
-  - Sigma and Ericsson since 2014 \pause
+  - Sigma (\rightarrow Nexer) and Ericsson since 2014 \pause
     - Radio Base Station \pause
   - Feature developer \rightarrow troubleshooter \rightarrow
     development environment\pause \rightarrow Flow Guardian
@@ -125,7 +125,7 @@
   - Thousands of developers \pause
   - All developing for Radio Base Station \pause
     - Different sub-organizations, different responsibilities \pause
-    - Sigma, one sub-org (CAT) \approx 700 developers \pause
+    - Nexer, one sub-org (CAT) \approx 700 developers \pause
   - Gerrit / Git / Jenkins / Jira / (Eiffel) \pause
   - + in-house tools
 
