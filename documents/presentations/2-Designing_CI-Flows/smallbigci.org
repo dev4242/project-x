@@ -1,6 +1,6 @@
 # ## This title will be seen in the pdf properties/meta data
-#+LATEX_HEADER: \newcommand{\mytitle}{CI from scratch}
-#+TITLE: \mytitle\newline\scriptsize{}Big CI: \emph{Or how I stopped worrying and started to trust the automatic test}
+#+LATEX_HEADER: \newcommand{\mytitle}{Big CI from scratch}
+#+TITLE: \mytitle\newline\scriptsize{}\emph{Or how I stopped worrying and started to love the automatic test}
 #+AUTHOR:
 #+LATEX_HEADER: \usepackage{xcolor, listings, stmaryrd, alltt, tikz, setspace, xspace, hyperref, minted}
 #+LATEX_HEADER: \usetikzlibrary{quotes,arrows,arrows.meta,shapes,calc,positioning,spy,decorations.pathmorphing,fit}
@@ -101,19 +101,19 @@
   - Layman's experience from the trenches \pause
   - AKA: /\myalert{3}{Davids opinion considered harmful!}/
 
-* Who am I
+* Who am I                                                         :noexport:
   \setbeamercovered{transparent=0}
-  - Sigma (\rightarrow Nexer) and Ericsson since 2014 \pause
-    - Radio Base Station \pause
+  - Sigma (\rightarrow Nexer) and Ericsson since 2014
+    - Radio Base Station
   - Feature developer \rightarrow troubleshooter \rightarrow
-    development environment\pause \rightarrow Flow Guardian
+    development environment \rightarrow Flow Guardian
 
   \setbeamercovered{transparent=40}
   \begin{figure}
   \begin{tikzpicture}[auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
   \centering
   \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<5> at (0,1.5) {\includegraphics[width=14cm]{./Flow-Masters-logo}};
+  \node at (0,1.5) {\includegraphics[width=14cm]{./Flow-Masters-logo}};
   \end{tikzpicture}
   \end{figure}
 
@@ -125,17 +125,17 @@
   - Thousands of developers \pause
   - All developing for Radio Base Station \pause
     - Different sub-organizations, different responsibilities \pause
-    - Nexer, one sub-org (CAT) \approx 700 developers \pause
+    - Nexer, one sub area \approx couple hundred developers \pause
   - Gerrit / Git / Jenkins / Jira / (Eiffel) \pause
   - + in-house tools
 
-  \begin{figure}
-  \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
-  \centering
-  \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
-  \node<4> at (4,5.5) {\includegraphics[width=1cm]{./cat}};
-  \end{tikzpicture}
-  \end{figure}
+  # \begin{figure}
+  # \begin{tikzpicture}[overlay,auto, >=stealth', scale=0.8, node distance=0.5cm, every node/.style={transform shape}]
+  # \centering
+  # \draw[draw=none, use as bounding box] (-6.5,-5) rectangle (6.5,5);
+  # \node<4> at (4,5.5) {\includegraphics[width=1cm]{./cat}};
+  # \end{tikzpicture}
+  # \end{figure}
 
 * Basic CI
   \begin{figure}
@@ -171,13 +171,13 @@
 
 * CI from the CI Flow Plumber's point of view
   - Modularization \pause
-  - Logging \pause
-  - Scalability \pause \bigskip
+  - Logging \pause \bigskip
 
   - \myalert{+}{Non-exhaustive list!} \pause[\thebeamerpauses]
     - Speed
     - Stability
     - Reproducibility
+    - Scalability
     - ...
 
 * Modularization
@@ -347,8 +347,10 @@
 
 * Questions?
   \centering
-  \includegraphics[width=10cm]{./Flow-Masters-logo}
-* Test failure
+  # \includegraphics[width=10cm]{./Flow-Masters-logo}
+  \includegraphics[width=10cm]{./ci-knowledge-gap}
+
+* Test failure                                                     :noexport:
   - Test case fail \rightarrow *What do you do?*
 
 * Logging
