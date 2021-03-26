@@ -290,7 +290,7 @@
 * Way towards Big CI, early actions
   \setbeamerfont{itemize/enumerate subsubbody}{size=\scriptsize}
 
-  1. \myalert{14}{Parellelism} \pause
+  1. \myalert{14}{Parallelism} \pause
      - Enables running many tests \pause
   2. Build avoidance / caching \pause
      - Don't rebuild source/objects that have not changed \pause
